@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/textures">
+        <file>textures/tropical-sunny-day-back.png</file>
+        <file>textures/tropical-sunny-day-down.png</file>
+        <file>textures/tropical-sunny-day-front.png</file>
+        <file>textures/tropical-sunny-day-left.png</file>
+        <file>textures/tropical-sunny-day-right.png</file>
+        <file>textures/tropical-sunny-day-up.png</file>
+        <file>textures/camo-air-force.png</file>
+        <file>textures/camo-army.png</file>
+        <file>textures/camo-navy.png</file>
+    </qresource>
+    <qresource prefix="/shaders">
+        <file>shaders/fcubemap.glsl</file>
+        <file>shaders/fflat.glsl</file>
+        <file>shaders/fgouraud.glsl</file>
+        <file>shaders/fnormal.glsl</file>
+        <file>shaders/fnormalmap.glsl</file>
+        <file>shaders/fphong.glsl</file>
+        <file>shaders/fshader1.glsl</file>
+        <file>shaders/ftex2.glsl</file>
+        <file>shaders/ftexture.glsl</file>
+        <file>shaders/vcubemap.glsl</file>
+        <file>shaders/vflat.glsl</file>
+        <file>shaders/vgouraud.glsl</file>
+        <file>shaders/vnormal.glsl</file>
+        <file>shaders/vnormalmap.glsl</file>
+        <file>shaders/vphong.glsl</file>
+        <file>shaders/vshader1.glsl</file>
+        <file>shaders/vtex2.glsl</file>
+        <file>shaders/vtexture.glsl</file>
+        <file>shaders/ftoon.glsl</file>
+        <file>shaders/vtoon.glsl</file>
+    </qresource>
+    <qresource prefix="/models">
+        <file>models/aircraft.off</file>
+        <file>models/cube.off</file>
+    </qresource>
+</RCC>

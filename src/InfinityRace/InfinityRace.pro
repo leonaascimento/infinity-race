@@ -26,10 +26,23 @@ CONFIG += c++14
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    camera.cpp \
+    light.cpp \
+    material.cpp \
+    model.cpp \
+    openglwidget.cpp \
+    trackball.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    camera.h \
+    light.h \
+    material.h \
+    model.h \
+    openglwidget.h \
+    trackball.h \
+    util.h
 
 FORMS += \
         mainwindow.ui
@@ -38,3 +51,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
