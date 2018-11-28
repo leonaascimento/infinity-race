@@ -29,6 +29,7 @@ void OpenGLWidget::initializeGL() {
   player->readOFFFile(":/models/models/aircraft.off");
   player->loadTexture(":/textures/textures/camo-army.png");
   player->rotationMatrix.rotate(180, 0, 1, 0);
+  player->zoom = 0.001;
   player->trackBall.resizeViewport(width(), height());
 
   connect(&timer, SIGNAL(timeout()), this, SLOT(animate()));
