@@ -19,6 +19,20 @@ Model::~Model() {
   destroyShaders();
 }
 
+bool Model::collide(Model* other) {
+  bool collides = false;
+  if (this->translationVector.x() > other->translationVector.x() - 0.5f &&
+      this->translationVector.x() < other->translationVector.x() + 0.5f &&
+      this->translationVector.y() > other->translationVector.y() - 0.5f &&
+      this->translationVector.y() < other->translationVector.y() + 0.5f &&
+      this->translationVector.z() > other->translationVector.z() - 1 &&
+      this->translationVector.z() < other->translationVector.z() + 1) {
+    collides = true;
+  }
+
+  return collides;
+}
+
 void Model::destroyVBOs() {
   glDeleteBuffers(1, &vboVertices);
   glDeleteBuffers(1, &vboIndices);

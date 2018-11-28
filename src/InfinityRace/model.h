@@ -34,6 +34,7 @@ class Model : public QOpenGLExtraFunctions {
   void createNormals();
   void createTexCoords();
   void createTangents();
+  bool collide(Model* model);
 
   GLuint vao = 0;
 

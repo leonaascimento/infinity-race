@@ -157,6 +157,10 @@ void OpenGLWidget::animate() {
   else
     sandclock->translationVector += QVector3D(0, 0, 0.01f);
 
+  if (aircraft->collide(sandclock.get())) {
+    qDebug("pegou");
+  }
+
   update();
 }
 
