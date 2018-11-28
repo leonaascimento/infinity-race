@@ -10,6 +10,8 @@ Model::Model(QOpenGLWidget* _glWidget) {
 
   shaderIndex = 0;
   numShaders = 0;
+
+  rotationMatrix.setToIdentity();
 }
 
 Model::~Model() {
@@ -225,6 +227,7 @@ void Model::drawModel(bool skybox) {
   if (!skybox) {
     modelMatrix.setToIdentity();
     modelMatrix.translate(0, 0, zoom);
+    modelMatrix *= rotationMatrix;
     modelMatrix.rotate(trackBall.getRotation());
     modelMatrix.scale(invDiag, invDiag, invDiag);
     modelMatrix.translate(-midPoint);

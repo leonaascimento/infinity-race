@@ -64,6 +64,7 @@ class Model : public QOpenGLExtraFunctions {
   QVector3D midPoint;
   double invDiag;
   double zoom = 0;
+  QMatrix4x4 rotationMatrix;
 
   Material material;
 
