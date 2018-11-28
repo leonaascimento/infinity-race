@@ -10,6 +10,7 @@ uniform vec4 diffuseProduct;
 uniform vec4 specularProduct;
 uniform float shininess;
 uniform sampler2D colorTexture;
+uniform float fade;
 
 out vec4 frag_color;
 
@@ -32,7 +33,7 @@ void main()
 {
     if (gl_FrontFacing)
     {
-        frag_color = vec4(Phong(fN).xyz, 1);
+        frag_color = vec4(fade, fade, fade, 0) + vec4(Phong(fN).xyz * (1 - fade), 1);
     }
     /*else
     {

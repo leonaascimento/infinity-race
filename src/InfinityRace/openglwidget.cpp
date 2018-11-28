@@ -98,6 +98,7 @@ void OpenGLWidget::paintGL() {
   locDiffuseProduct = glGetUniformLocation(shaderProgramID, "diffuseProduct");
   locSpecularProduct = glGetUniformLocation(shaderProgramID, "specularProduct");
   locShininess = glGetUniformLocation(shaderProgramID, "shininess");
+  GLint locFade = glGetUniformLocation(shaderProgramID, "fade");
 
   glUseProgram(shaderProgramID);
 
@@ -109,6 +110,7 @@ void OpenGLWidget::paintGL() {
   glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
   glUniform1f(locShininess, aircraft->material.shininess);
+  glUniform1f(locFade, 0.2f);
 
   aircraft->drawModel(false);
 
