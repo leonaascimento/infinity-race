@@ -29,14 +29,14 @@ void OpenGLWidget::initializeGL() {
   aircraft->readOFFFile(":/models/models/aircraft.off");
   aircraft->loadTexture(":/textures/textures/camo-army.png");
   aircraft->rotationMatrix.rotate(180, 0, 1, 0);
-  aircraft->zoom = 0.001;
+  aircraft->invDiag *= 0.5f;
   aircraft->trackBall.resizeViewport(width(), height());
 
   sandclock = std::make_shared<Model>(this);
   sandclock->shaderIndex = 3;
   sandclock->readOFFFile(":/models/models/sandclock.off");
   sandclock->zoom = 0.1;
-  sandclock->invDiag *= 0.1;
+  sandclock->invDiag *= 0.05;
   sandclock->translationVector = QVector3D(0, 0, -1.f);
   sandclock->trackBall.resizeViewport(width(), height());
 
@@ -158,7 +158,11 @@ void OpenGLWidget::resizeGL(int width, int height) {
 }
 
 void OpenGLWidget::animate() {
-  sandclock->translationVector -= QVector3D(0, 0, -0.0001f);
+  if (sandclock->translationVector.z() > 2)
+    sandclock->translationVector.setZ(-5);
+  else
+    sandclock->translationVector += QVector3D(0, 0, 0.01f);
+
   update();
 }
 
@@ -191,13 +195,21 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
     QApplication::quit();
   }
   if (event->key() == Qt::Key_Left) {
-    aircraft->translationVector += QVector3D(0.5f, 0, 0);
-    aircraft->rotationMatrix.rotate(10, 0, 0, -1);
+    aircraft->translationVector += QVector3D(-0.5f, 0, 0);
+    aircraft->rotationMatrix.rotate(10, 0, 0, 1);
+    camera.eye.setX(camera.eye.x() - 0.5f);
+    camera.center.setX(camera.center.x() - 0.5f);
+    camera.computeViewMatrix();
+
     qDebug("left");
   }
   if (event->key() == Qt::Key_Right) {
-    aircraft->translationVector += QVector3D(-0.5f, 0, 0);
-    aircraft->rotationMatrix.rotate(10, 0, 0, 1);
+    aircraft->translationVector += QVector3D(0.5f, 0, 0);
+    aircraft->rotationMatrix.rotate(10, 0, 0, -1);
+    camera.eye.setX(camera.eye.x() + 0.5f);
+    camera.center.setX(camera.center.x() + 0.5f);
+    camera.computeViewMatrix();
+
     qDebug("right");
   }
 }
