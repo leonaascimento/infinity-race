@@ -33,7 +33,9 @@ void main()
 {
     if (gl_FrontFacing)
     {
-        frag_color = vec4(fade, fade, fade, 0) + vec4(Phong(fN).xyz * (1 - fade), 1);
+        //frag_color = vec4(fade, fade, fade, 0) + vec4(Phong(fN).xyz * (1 - fade), 1);
+        vec3 rgb = Phong(fN).xyz;
+        frag_color = vec4(fade, 0, 0, 0) + vec4(rgb.x * (1 - fade), rgb.y, rgb.z, 1);
     }
     /*else
     {

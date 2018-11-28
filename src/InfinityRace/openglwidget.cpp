@@ -1,6 +1,8 @@
 #include "openglwidget.h"
 
-OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget(parent) {}
+OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget(parent) {
+  fade = 0;
+}
 
 void OpenGLWidget::wheelEvent(QWheelEvent* event) {
   if (!skybox)
@@ -110,7 +112,7 @@ void OpenGLWidget::paintGL() {
   glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
   glUniform1f(locShininess, aircraft->material.shininess);
-  glUniform1f(locFade, 0.2f);
+  glUniform1f(locFade, fade);
 
   aircraft->drawModel(false);
 
@@ -157,10 +159,19 @@ void OpenGLWidget::animate() {
   if (sandclock->translationVector.z() > 2)
     sandclock->translationVector.setZ(-5);
   else
-    sandclock->translationVector += QVector3D(0, 0, 0.01f);
+    sandclock->translationVector += QVector3D(0, 0, 0.01f * aircraftBoost);
 
   if (aircraft->collide(sandclock.get())) {
-    qDebug("pegou");
+    sandclock->translationVector.setZ(-5);
+    fade -= 0.1f;
+
+    if (fade < 0)
+      fade = 0;
+  } else {
+    fade += 0.0005f;
+
+    if (fade > 1)
+      fade = 1;
   }
 
   update();
@@ -197,20 +208,25 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
   }
   if (event->key() == Qt::Key_Up) {
     aircraft->translationVector += QVector3D(0, 0.5f, 0);
-    // aircraft->rotationMatrix.rotate(10, 0, 0, -1);
     camera.eye.setY(camera.eye.y() + 0.5f);
-    // camera.center.setX(camera.center.x() + 0.5f);
     camera.computeViewMatrix();
 
-    qDebug("right");
+    qDebug("up");
   }
   if (event->key() == Qt::Key_Down) {
     aircraft->translationVector += QVector3D(0, -0.5f, 0);
-    // aircraft->rotationMatrix.rotate(10, 0, 0, -1);
     camera.eye.setY(camera.eye.y() - 0.5f);
-    // camera.center.setX(camera.center.x() + 0.5f);
     camera.computeViewMatrix();
 
-    qDebug("right");
+    qDebug("down");
+  }
+  if (event->key() == Qt::Key_Space) {
+    aircraftBoost = 3;
+  }
+}
+
+void OpenGLWidget::keyReleaseEvent(QKeyEvent* event) {
+  if (event->key() == Qt::Key_Space) {
+    aircraftBoost = 1;
   }
 }

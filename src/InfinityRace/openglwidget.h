@@ -20,6 +20,7 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   void mouseReleaseEvent(QMouseEvent* event);
   void keyPressEvent(QKeyEvent* event);
   void wheelEvent(QWheelEvent* event);
+  void keyReleaseEvent(QKeyEvent* event);
 
   QTimer timer;
 
@@ -38,6 +39,9 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   std::shared_ptr<Model> sandclock;
   Light light;
   Camera camera;
+
+  GLfloat fade;
+  GLfloat aircraftBoost = 1;
 
   void updateScene(int);
 };
