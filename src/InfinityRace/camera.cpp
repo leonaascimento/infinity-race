@@ -7,7 +7,7 @@ Camera::Camera() {
 
 void Camera::computeViewMatrix() {
   viewMatrix.setToIdentity();
-  viewMatrix.lookAt(eye, center, up);
+  viewMatrix.lookAt(eye, eye + center, up);
 }
 
 void Camera::resizeViewport(int width, int height) {

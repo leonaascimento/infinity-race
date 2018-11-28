@@ -8,7 +8,7 @@ class Camera {
  public:
   Camera();
 
-  QVector3D eye = QVector3D(0, 1, 1.5f);
+  QVector3D eye = QVector3D(0, 1, 2.3f);
   QVector3D center = QVector3D(0, 0, -0.8f);
   QVector3D up = QVector3D(0, 1, 0);
 

@@ -198,7 +198,7 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
     aircraft->translationVector += QVector3D(-0.5f, 0, 0);
     aircraft->rotationMatrix.rotate(10, 0, 0, 1);
     camera.eye.setX(camera.eye.x() - 0.5f);
-    camera.center.setX(camera.center.x() - 0.5f);
+    // camera.center.setX(camera.center.x() - 0.5f);
     camera.computeViewMatrix();
 
     qDebug("left");
@@ -207,7 +207,25 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
     aircraft->translationVector += QVector3D(0.5f, 0, 0);
     aircraft->rotationMatrix.rotate(10, 0, 0, -1);
     camera.eye.setX(camera.eye.x() + 0.5f);
-    camera.center.setX(camera.center.x() + 0.5f);
+    // camera.center.setX(camera.center.x() + 0.5f);
+    camera.computeViewMatrix();
+
+    qDebug("right");
+  }
+  if (event->key() == Qt::Key_Up) {
+    aircraft->translationVector += QVector3D(0, 0.5f, 0);
+    // aircraft->rotationMatrix.rotate(10, 0, 0, -1);
+    camera.eye.setY(camera.eye.y() + 0.5f);
+    // camera.center.setX(camera.center.x() + 0.5f);
+    camera.computeViewMatrix();
+
+    qDebug("right");
+  }
+  if (event->key() == Qt::Key_Down) {
+    aircraft->translationVector += QVector3D(0, -0.5f, 0);
+    // aircraft->rotationMatrix.rotate(10, 0, 0, -1);
+    camera.eye.setY(camera.eye.y() - 0.5f);
+    // camera.center.setX(camera.center.x() + 0.5f);
     camera.computeViewMatrix();
 
     qDebug("right");
