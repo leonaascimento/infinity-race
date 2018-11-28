@@ -14,7 +14,6 @@
 
 #include "light.h"
 #include "material.h"
-#include "trackball.h"
 
 class Model : public QOpenGLExtraFunctions {
  public:
@@ -73,8 +72,6 @@ class Model : public QOpenGLExtraFunctions {
   int numShaders;
 
   std::vector<GLuint> shaderProgram;
-
-  TrackBall trackBall;
 };
 
 #endif  // MODEL_H

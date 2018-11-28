@@ -229,7 +229,6 @@ void Model::drawModel(bool skybox) {
     modelMatrix.translate(0, 0, zoom);
     modelMatrix.translate(translationVector);
     modelMatrix *= rotationMatrix;
-    modelMatrix.rotate(trackBall.getRotation());
     modelMatrix.scale(invDiag, invDiag, invDiag);
 
     modelMatrix.translate(-midPoint);
@@ -272,7 +271,6 @@ void Model::drawModel(bool skybox) {
   } else {
     modelMatrix.setToIdentity();
     modelMatrix.translate(0, 0, zoom);
-    modelMatrix.rotate(trackBall.getRotation());
     modelMatrix.scale(10.f, 10.f, 10.f);
 
     GLuint locModel = 0;

@@ -21,7 +21,6 @@ void OpenGLWidget::initializeGL() {
   skybox = std::make_shared<Model>(this);
   skybox->shaderIndex = 9;
   skybox->readOFFFile(":/models/models/cube.off");
-  skybox->trackBall.resizeViewport(width(), height());
   skybox->invDiag *= 5;
 
   aircraft = std::make_shared<Model>(this);
@@ -30,7 +29,6 @@ void OpenGLWidget::initializeGL() {
   aircraft->loadTexture(":/textures/textures/camo-army.png");
   aircraft->rotationMatrix.rotate(180, 0, 1, 0);
   aircraft->invDiag *= 0.5f;
-  aircraft->trackBall.resizeViewport(width(), height());
 
   sandclock = std::make_shared<Model>(this);
   sandclock->shaderIndex = 3;
@@ -38,7 +36,6 @@ void OpenGLWidget::initializeGL() {
   sandclock->zoom = 0.1;
   sandclock->invDiag *= 0.05;
   sandclock->translationVector = QVector3D(0, 0, -1.f);
-  sandclock->trackBall.resizeViewport(width(), height());
 
   connect(&timer, SIGNAL(timeout()), this, SLOT(animate()));
   timer.start(0);
@@ -151,9 +148,6 @@ void OpenGLWidget::paintGL() {
 void OpenGLWidget::resizeGL(int width, int height) {
   camera.resizeViewport(width, height);
 
-  if (skybox)
-    skybox->trackBall.resizeViewport(width, height);
-
   update();
 }
 
@@ -166,28 +160,11 @@ void OpenGLWidget::animate() {
   update();
 }
 
-void OpenGLWidget::mouseMoveEvent(QMouseEvent* event) {
-  if (!skybox)
-    return;
+void OpenGLWidget::mouseMoveEvent(QMouseEvent* event) {}
 
-  skybox->trackBall.mouseMove(event->localPos());
-}
+void OpenGLWidget::mousePressEvent(QMouseEvent* event) {}
 
-void OpenGLWidget::mousePressEvent(QMouseEvent* event) {
-  if (!skybox)
-    return;
-
-  if (event->button() & Qt::LeftButton)
-    skybox->trackBall.mousePress(event->localPos());
-}
-
-void OpenGLWidget::mouseReleaseEvent(QMouseEvent* event) {
-  if (!skybox)
-    return;
-
-  if (event->button() & Qt::LeftButton)
-    skybox->trackBall.mouseRelease(event->localPos());
-}
+void OpenGLWidget::mouseReleaseEvent(QMouseEvent* event) {}
 
 // Strong focus is required
 void OpenGLWidget::keyPressEvent(QKeyEvent* event) {

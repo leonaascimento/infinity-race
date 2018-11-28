@@ -31,8 +31,7 @@ SOURCES += \
     light.cpp \
     material.cpp \
     model.cpp \
-    openglwidget.cpp \
-    trackball.cpp
+    openglwidget.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +40,6 @@ HEADERS += \
     material.h \
     model.h \
     openglwidget.h \
-    trackball.h \
     util.h
 
 FORMS += \
