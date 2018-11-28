@@ -227,9 +227,11 @@ void Model::drawModel(bool skybox) {
   if (!skybox) {
     modelMatrix.setToIdentity();
     modelMatrix.translate(0, 0, zoom);
+    modelMatrix.translate(translationVector);
     modelMatrix *= rotationMatrix;
     modelMatrix.rotate(trackBall.getRotation());
     modelMatrix.scale(invDiag, invDiag, invDiag);
+
     modelMatrix.translate(-midPoint);
 
     GLuint locModel = 0;

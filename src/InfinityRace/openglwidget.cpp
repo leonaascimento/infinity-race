@@ -24,13 +24,21 @@ void OpenGLWidget::initializeGL() {
   skybox->trackBall.resizeViewport(width(), height());
   skybox->invDiag *= 5;
 
-  player = std::make_shared<Model>(this);
-  player->shaderIndex = 6;
-  player->readOFFFile(":/models/models/aircraft.off");
-  player->loadTexture(":/textures/textures/camo-army.png");
-  player->rotationMatrix.rotate(180, 0, 1, 0);
-  player->zoom = 0.001;
-  player->trackBall.resizeViewport(width(), height());
+  aircraft = std::make_shared<Model>(this);
+  aircraft->shaderIndex = 6;
+  aircraft->readOFFFile(":/models/models/aircraft.off");
+  aircraft->loadTexture(":/textures/textures/camo-army.png");
+  aircraft->rotationMatrix.rotate(180, 0, 1, 0);
+  aircraft->zoom = 0.001;
+  aircraft->trackBall.resizeViewport(width(), height());
+
+  sandclock = std::make_shared<Model>(this);
+  sandclock->shaderIndex = 3;
+  sandclock->readOFFFile(":/models/models/sandclock.off");
+  sandclock->zoom = 0.1;
+  sandclock->invDiag *= 0.1;
+  sandclock->translationVector = QVector3D(0, 0, -1.f);
+  sandclock->trackBall.resizeViewport(width(), height());
 
   connect(&timer, SIGNAL(timeout()), this, SLOT(animate()));
   timer.start(0);
@@ -40,6 +48,7 @@ void OpenGLWidget::paintGL() {
   glViewport(0, 0, width(), height());
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  // skybox
   if (!skybox)
     return;
 
@@ -74,14 +83,16 @@ void OpenGLWidget::paintGL() {
 
   skybox->drawModel(true);
 
-  if (!player)
+  // aircraft
+
+  if (!aircraft)
     return;
 
-  shaderProgramID = player->shaderProgram[player->shaderIndex];
+  shaderProgramID = aircraft->shaderProgram[aircraft->shaderIndex];
 
-  ambientProduct = light.ambient * player->material.ambient;
-  diffuseProduct = light.diffuse * player->material.diffuse;
-  specularProduct = light.specular * player->material.specular;
+  ambientProduct = light.ambient * aircraft->material.ambient;
+  diffuseProduct = light.diffuse * aircraft->material.diffuse;
+  specularProduct = light.specular * aircraft->material.specular;
 
   locProjection = glGetUniformLocation(shaderProgramID, "projection");
   locView = glGetUniformLocation(shaderProgramID, "view");
@@ -100,9 +111,41 @@ void OpenGLWidget::paintGL() {
   glUniform4fv(locAmbientProduct, 1, &(ambientProduct[0]));
   glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
-  glUniform1f(locShininess, player->material.shininess);
+  glUniform1f(locShininess, aircraft->material.shininess);
 
-  player->drawModel(false);
+  aircraft->drawModel(false);
+
+  // sandclock
+
+  if (!sandclock)
+    return;
+
+  shaderProgramID = sandclock->shaderProgram[sandclock->shaderIndex];
+
+  ambientProduct = light.ambient * sandclock->material.ambient;
+  diffuseProduct = light.diffuse * sandclock->material.diffuse;
+  specularProduct = light.specular * sandclock->material.specular;
+
+  locProjection = glGetUniformLocation(shaderProgramID, "projection");
+  locView = glGetUniformLocation(shaderProgramID, "view");
+  locLightPosition = glGetUniformLocation(shaderProgramID, "lightPosition");
+  locAmbientProduct = glGetUniformLocation(shaderProgramID, "ambientProduct");
+  locDiffuseProduct = glGetUniformLocation(shaderProgramID, "diffuseProduct");
+  locSpecularProduct = glGetUniformLocation(shaderProgramID, "specularProduct");
+  locShininess = glGetUniformLocation(shaderProgramID, "shininess");
+
+  glUseProgram(shaderProgramID);
+
+  glUniformMatrix4fv(locProjection, 1, GL_FALSE,
+                     camera.projectionMatrix.data());
+  glUniformMatrix4fv(locView, 1, GL_FALSE, camera.viewMatrix.data());
+  glUniform4fv(locLightPosition, 1, &(light.position[0]));
+  glUniform4fv(locAmbientProduct, 1, &(ambientProduct[0]));
+  glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
+  glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
+  glUniform1f(locShininess, sandclock->material.shininess);
+
+  sandclock->drawModel(false);
 }
 
 void OpenGLWidget::resizeGL(int width, int height) {
@@ -115,6 +158,7 @@ void OpenGLWidget::resizeGL(int width, int height) {
 }
 
 void OpenGLWidget::animate() {
+  sandclock->translationVector -= QVector3D(0, 0, -0.0001f);
   update();
 }
 
@@ -145,5 +189,15 @@ void OpenGLWidget::mouseReleaseEvent(QMouseEvent* event) {
 void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
   if (event->key() == Qt::Key_Escape) {
     QApplication::quit();
+  }
+  if (event->key() == Qt::Key_Left) {
+    aircraft->translationVector += QVector3D(0.5f, 0, 0);
+    aircraft->rotationMatrix.rotate(10, 0, 0, -1);
+    qDebug("left");
+  }
+  if (event->key() == Qt::Key_Right) {
+    aircraft->translationVector += QVector3D(-0.5f, 0, 0);
+    aircraft->rotationMatrix.rotate(10, 0, 0, 1);
+    qDebug("right");
   }
 }

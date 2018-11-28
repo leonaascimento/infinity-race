@@ -34,7 +34,8 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   void paintGL();
 
   std::shared_ptr<Model> skybox;
-  std::shared_ptr<Model> player;
+  std::shared_ptr<Model> aircraft;
+  std::shared_ptr<Model> sandclock;
   Light light;
   Camera camera;
 

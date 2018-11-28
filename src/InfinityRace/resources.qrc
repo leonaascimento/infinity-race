@@ -35,5 +35,6 @@
     <qresource prefix="/models">
         <file>models/aircraft.off</file>
         <file>models/cube.off</file>
+        <file>models/sandclock.off</file>
     </qresource>
 </RCC>
