@@ -49,5 +49,5 @@ void Aircraft::draw(GLfloat fade) {
   glUniform1f(locShininess, m_model->material.shininess);
   glUniform1f(locFade, fade);
 
-  m_model->drawModel(false);
+  m_model->drawModel(false, shaderProgramID);
 }

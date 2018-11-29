@@ -58,7 +58,7 @@ class Model : public QOpenGLExtraFunctions {
   void loadTextureLayer(const QString& fileName);
   void loadCubeMapTexture();
 
-  void drawModel(bool skybox);
+  void drawModel(bool skybox, GLuint shaderProgramId);
 
   QMatrix4x4 modelMatrix;
   QVector3D midPoint;

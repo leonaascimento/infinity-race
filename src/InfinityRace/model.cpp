@@ -229,7 +229,7 @@ void Model::createShaders() {
   }
 }
 
-void Model::drawModel(bool skybox) {
+void Model::drawModel(bool skybox, GLuint shaderProgramId) {
   if (!skybox) {
     modelMatrix.setToIdentity();
     modelMatrix.translate(0, 0, zoom);
@@ -242,11 +242,9 @@ void Model::drawModel(bool skybox) {
     GLuint locModel = 0;
     GLuint locNormalMatrix = 0;
     GLuint locShininess = 0;
-    locModel = glGetUniformLocation(shaderProgram[shaderIndex], "model");
-    locNormalMatrix =
-        glGetUniformLocation(shaderProgram[shaderIndex], "normalMatrix");
-    locShininess =
-        glGetUniformLocation(shaderProgram[shaderIndex], "shininess");
+    locModel = glGetUniformLocation(shaderProgramId, "model");
+    locNormalMatrix = glGetUniformLocation(shaderProgramId, "normalMatrix");
+    locShininess = glGetUniformLocation(shaderProgramId, "shininess");
 
     glBindVertexArray(vao);
 
@@ -257,8 +255,7 @@ void Model::drawModel(bool skybox) {
 
     if (textureID) {
       GLuint locColorTexture = 0;
-      locColorTexture =
-          glGetUniformLocation(shaderProgram[shaderIndex], "colorTexture");
+      locColorTexture = glGetUniformLocation(shaderProgramId, "colorTexture");
       glUniform1i(locColorTexture, 0);
 
       glActiveTexture(GL_TEXTURE0);
@@ -268,7 +265,7 @@ void Model::drawModel(bool skybox) {
     if (textureLayerID) {
       GLuint locColorTextureLayer = 1;
       locColorTextureLayer =
-          glGetUniformLocation(shaderProgram[shaderIndex], "colorTextureLayer");
+          glGetUniformLocation(shaderProgramId, "colorTextureLayer");
       glUniform1i(locColorTextureLayer, 1);
 
       glActiveTexture(GL_TEXTURE1);
@@ -280,7 +277,7 @@ void Model::drawModel(bool skybox) {
     modelMatrix.scale(10.f, 10.f, 10.f);
 
     GLuint locModel = 0;
-    locModel = glGetUniformLocation(shaderProgram[shaderIndex], "model");
+    locModel = glGetUniformLocation(shaderProgramId, "model");
 
     glBindVertexArray(vao);
 

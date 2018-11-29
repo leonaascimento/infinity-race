@@ -47,5 +47,5 @@ void Skybox::draw() {
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
   glUniform1f(locShininess, m_model->material.shininess);
 
-  m_model->drawModel(true);
+  m_model->drawModel(true, shaderProgramID);
 }

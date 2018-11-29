@@ -102,7 +102,6 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
     aircraft->translationVector += QVector3D(-0.5f, 0, 0);
     aircraft->rotationMatrix.rotate(10, 0, 0, 1);
     camera.eye.setX(camera.eye.x() - 0.5f);
-    // camera.center.setX(camera.center.x() - 0.5f);
     camera.computeViewMatrix();
 
     qDebug("left");
@@ -111,7 +110,6 @@ void OpenGLWidget::keyPressEvent(QKeyEvent* event) {
     aircraft->translationVector += QVector3D(0.5f, 0, 0);
     aircraft->rotationMatrix.rotate(10, 0, 0, -1);
     camera.eye.setX(camera.eye.x() + 0.5f);
-    // camera.center.setX(camera.center.x() + 0.5f);
     camera.computeViewMatrix();
 
     qDebug("right");

@@ -49,5 +49,5 @@ void Collectable::draw() {
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
   glUniform1f(locShininess, m_model->material.shininess);
 
-  m_model->drawModel(false);
+  m_model->drawModel(false, shaderProgramID);
 }
