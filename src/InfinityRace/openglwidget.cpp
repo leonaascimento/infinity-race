@@ -4,13 +4,6 @@ OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget(parent) {
   fade = 0;
 }
 
-void OpenGLWidget::wheelEvent(QWheelEvent* event) {
-  if (!skybox)
-    return;
-
-  skybox->zoom += 0.001 * event->delta();
-}
-
 void OpenGLWidget::initializeGL() {
   initializeOpenGLFunctions();
 
@@ -99,12 +92,6 @@ void OpenGLWidget::animate() {
 
   update();
 }
-
-void OpenGLWidget::mouseMoveEvent(QMouseEvent* event) {}
-
-void OpenGLWidget::mousePressEvent(QMouseEvent* event) {}
-
-void OpenGLWidget::mouseReleaseEvent(QMouseEvent* event) {}
 
 // Strong focus is required
 void OpenGLWidget::keyPressEvent(QKeyEvent* event) {

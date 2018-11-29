@@ -18,11 +18,7 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
  public:
   OpenGLWidget(QWidget* parent = nullptr);
 
-  void mouseMoveEvent(QMouseEvent* event);
-  void mousePressEvent(QMouseEvent* event);
-  void mouseReleaseEvent(QMouseEvent* event);
   void keyPressEvent(QKeyEvent* event);
-  void wheelEvent(QWheelEvent* event);
   void keyReleaseEvent(QKeyEvent* event);
 
   QTimer timer;

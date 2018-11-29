@@ -1,10 +1,8 @@
 #include "model.h"
 
 Model::Model(QOpenGLWidget* _glWidget) {
-  glWidget = _glWidget;
-  glWidget->makeCurrent();
-
   initializeOpenGLFunctions();
+  glWidget = _glWidget;
 
   loadCubeMapTexture();
 
