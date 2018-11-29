@@ -6,6 +6,7 @@
 #include <QWidget>
 
 #include "camera.h"
+#include "collectable.h"
 #include "light.h"
 #include "model.h"
 
@@ -34,6 +35,7 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   void resizeGL(int width, int height);
   void paintGL();
 
+  std::shared_ptr<Collectable> collectable;
   std::shared_ptr<Model> skybox;
   std::shared_ptr<Model> aircraft;
   std::shared_ptr<Model> sandclock;

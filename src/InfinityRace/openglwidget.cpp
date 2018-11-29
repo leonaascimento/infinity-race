@@ -39,6 +39,11 @@ void OpenGLWidget::initializeGL() {
   sandclock->invDiag *= 0.05;
   sandclock->translationVector = QVector3D(0, 0, -1.f);
 
+  collectable = std::make_shared<Collectable>(this);
+  collectable->shape(sandclock.get());
+  collectable->viewedBy(&camera);
+  collectable->litBy(&light);
+
   connect(&timer, SIGNAL(timeout()), this, SLOT(animate()));
   timer.start(0);
 }
@@ -118,35 +123,7 @@ void OpenGLWidget::paintGL() {
 
   // sandclock
 
-  if (!sandclock)
-    return;
-
-  shaderProgramID = sandclock->shaderProgram[sandclock->shaderIndex];
-
-  ambientProduct = light.ambient * sandclock->material.ambient;
-  diffuseProduct = light.diffuse * sandclock->material.diffuse;
-  specularProduct = light.specular * sandclock->material.specular;
-
-  locProjection = glGetUniformLocation(shaderProgramID, "projection");
-  locView = glGetUniformLocation(shaderProgramID, "view");
-  locLightPosition = glGetUniformLocation(shaderProgramID, "lightPosition");
-  locAmbientProduct = glGetUniformLocation(shaderProgramID, "ambientProduct");
-  locDiffuseProduct = glGetUniformLocation(shaderProgramID, "diffuseProduct");
-  locSpecularProduct = glGetUniformLocation(shaderProgramID, "specularProduct");
-  locShininess = glGetUniformLocation(shaderProgramID, "shininess");
-
-  glUseProgram(shaderProgramID);
-
-  glUniformMatrix4fv(locProjection, 1, GL_FALSE,
-                     camera.projectionMatrix.data());
-  glUniformMatrix4fv(locView, 1, GL_FALSE, camera.viewMatrix.data());
-  glUniform4fv(locLightPosition, 1, &(light.position[0]));
-  glUniform4fv(locAmbientProduct, 1, &(ambientProduct[0]));
-  glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
-  glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
-  glUniform1f(locShininess, sandclock->material.shininess);
-
-  sandclock->drawModel(false);
+  collectable->draw();
 }
 
 void OpenGLWidget::resizeGL(int width, int height) {

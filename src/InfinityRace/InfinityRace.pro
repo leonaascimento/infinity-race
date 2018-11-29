@@ -31,7 +31,9 @@ SOURCES += \
     light.cpp \
     material.cpp \
     model.cpp \
-    openglwidget.cpp
+    openglwidget.cpp \
+    collectable.cpp \
+    aircraft.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +42,9 @@ HEADERS += \
     material.h \
     model.h \
     openglwidget.h \
-    util.h
+    util.h \
+    collectable.h \
+    aircraft.h
 
 FORMS += \
         mainwindow.ui
