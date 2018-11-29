@@ -14,19 +14,19 @@ void OpenGLWidget::initializeGL() {
   glEnable(GL_DEPTH_TEST);
 
   skybox = std::make_shared<Model>(this);
-  skybox->shaderIndex = 9;
+  skybox->shaderIndex = 2;
   skybox->readOFFFile(":/models/models/cube.off");
   skybox->invDiag *= 5;
 
   aircraft = std::make_shared<Model>(this);
-  aircraft->shaderIndex = 6;
+  aircraft->shaderIndex = 1;
   aircraft->readOFFFile(":/models/models/aircraft.off");
   aircraft->loadTexture(":/textures/textures/camo-army.png");
   aircraft->rotationMatrix.rotate(180, 0, 1, 0);
   aircraft->invDiag *= 0.5f;
 
   sandclock = std::make_shared<Model>(this);
-  sandclock->shaderIndex = 3;
+  sandclock->shaderIndex = 0;
   sandclock->readOFFFile(":/models/models/sandclock.off");
   sandclock->zoom = 0.1;
   sandclock->invDiag *= 0.05;

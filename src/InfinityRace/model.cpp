@@ -104,21 +104,15 @@ void Model::destroyShaders() {
 }
 
 void Model::createShaders() {
-  numShaders = 10;
+  numShaders = 3;
 
-  QString vertexShaderFile[] = {
-      ":/shaders/shaders/vshader1.glsl",   ":/shaders/shaders/vflat.glsl",
-      ":/shaders/shaders/vgouraud.glsl",   ":/shaders/shaders/vphong.glsl",
-      ":/shaders/shaders/vtoon.glsl",      ":/shaders/shaders/vnormal.glsl",
-      ":/shaders/shaders/vtexture.glsl",   ":/shaders/shaders/vtex2.glsl",
-      ":/shaders/shaders/vnormalmap.glsl", ":/shaders/shaders/vcubemap.glsl"};
+  QString vertexShaderFile[] = {":/shaders/shaders/vphong.glsl",
+                                ":/shaders/shaders/vtexture.glsl",
+                                ":/shaders/shaders/vcubemap.glsl"};
 
-  QString fragmentShaderFile[] = {
-      ":/shaders/shaders/fshader1.glsl",   ":/shaders/shaders/fflat.glsl",
-      ":/shaders/shaders/fgouraud.glsl",   ":/shaders/shaders/fphong.glsl",
-      ":/shaders/shaders/ftoon.glsl",      ":/shaders/shaders/fnormal.glsl",
-      ":/shaders/shaders/ftexture.glsl",   ":/shaders/shaders/ftex2.glsl",
-      ":/shaders/shaders/fnormalmap.glsl", ":/shaders/shaders/fcubemap.glsl"};
+  QString fragmentShaderFile[] = {":/shaders/shaders/fphong.glsl",
+                                  ":/shaders/shaders/ftexture.glsl",
+                                  ":/shaders/shaders/fcubemap.glsl"};
 
   destroyShaders();
 
