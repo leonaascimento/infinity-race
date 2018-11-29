@@ -33,7 +33,8 @@ SOURCES += \
     model.cpp \
     openglwidget.cpp \
     collectable.cpp \
-    aircraft.cpp
+    aircraft.cpp \
+    skybox.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +45,8 @@ HEADERS += \
     openglwidget.h \
     util.h \
     collectable.h \
-    aircraft.h
+    aircraft.h \
+    skybox.h
 
 FORMS += \
         mainwindow.ui

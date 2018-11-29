@@ -39,6 +39,16 @@ void OpenGLWidget::initializeGL() {
   sandclock->invDiag *= 0.05;
   sandclock->translationVector = QVector3D(0, 0, -1.f);
 
+  sky = std::make_shared<Skybox>(this);
+  sky->shape(skybox.get());
+  sky->viewedBy(&camera);
+  sky->litBy(&light);
+
+  player = std::make_shared<Aircraft>(this);
+  player->shape(aircraft.get());
+  player->viewedBy(&camera);
+  player->litBy(&light);
+
   collectable = std::make_shared<Collectable>(this);
   collectable->shape(sandclock.get());
   collectable->viewedBy(&camera);
@@ -53,76 +63,12 @@ void OpenGLWidget::paintGL() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // skybox
-  if (!skybox)
-    return;
-
-  GLuint shaderProgramID = skybox->shaderProgram[skybox->shaderIndex];
-
-  QVector4D ambientProduct = light.ambient * skybox->material.ambient;
-  QVector4D diffuseProduct = light.diffuse * skybox->material.diffuse;
-  QVector4D specularProduct = light.specular * skybox->material.specular;
-
-  GLint locProjection = glGetUniformLocation(shaderProgramID, "projection");
-  GLint locView = glGetUniformLocation(shaderProgramID, "view");
-  GLint locLightPosition =
-      glGetUniformLocation(shaderProgramID, "lightPosition");
-  GLint locAmbientProduct =
-      glGetUniformLocation(shaderProgramID, "ambientProduct");
-  GLint locDiffuseProduct =
-      glGetUniformLocation(shaderProgramID, "diffuseProduct");
-  GLint locSpecularProduct =
-      glGetUniformLocation(shaderProgramID, "specularProduct");
-  GLint locShininess = glGetUniformLocation(shaderProgramID, "shininess");
-
-  glUseProgram(shaderProgramID);
-
-  glUniformMatrix4fv(locProjection, 1, GL_FALSE,
-                     camera.projectionMatrix.data());
-  glUniformMatrix4fv(locView, 1, GL_FALSE, camera.viewMatrix.data());
-  glUniform4fv(locLightPosition, 1, &(light.position[0]));
-  glUniform4fv(locAmbientProduct, 1, &(ambientProduct[0]));
-  glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
-  glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
-  glUniform1f(locShininess, skybox->material.shininess);
-
-  skybox->drawModel(true);
+  sky->draw();
 
   // aircraft
-
-  if (!aircraft)
-    return;
-
-  shaderProgramID = aircraft->shaderProgram[aircraft->shaderIndex];
-
-  ambientProduct = light.ambient * aircraft->material.ambient;
-  diffuseProduct = light.diffuse * aircraft->material.diffuse;
-  specularProduct = light.specular * aircraft->material.specular;
-
-  locProjection = glGetUniformLocation(shaderProgramID, "projection");
-  locView = glGetUniformLocation(shaderProgramID, "view");
-  locLightPosition = glGetUniformLocation(shaderProgramID, "lightPosition");
-  locAmbientProduct = glGetUniformLocation(shaderProgramID, "ambientProduct");
-  locDiffuseProduct = glGetUniformLocation(shaderProgramID, "diffuseProduct");
-  locSpecularProduct = glGetUniformLocation(shaderProgramID, "specularProduct");
-  locShininess = glGetUniformLocation(shaderProgramID, "shininess");
-  GLint locFade = glGetUniformLocation(shaderProgramID, "fade");
-
-  glUseProgram(shaderProgramID);
-
-  glUniformMatrix4fv(locProjection, 1, GL_FALSE,
-                     camera.projectionMatrix.data());
-  glUniformMatrix4fv(locView, 1, GL_FALSE, camera.viewMatrix.data());
-  glUniform4fv(locLightPosition, 1, &(light.position[0]));
-  glUniform4fv(locAmbientProduct, 1, &(ambientProduct[0]));
-  glUniform4fv(locDiffuseProduct, 1, &(diffuseProduct[0]));
-  glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
-  glUniform1f(locShininess, aircraft->material.shininess);
-  glUniform1f(locFade, fade);
-
-  aircraft->drawModel(false);
+  player->draw(fade);
 
   // sandclock
-
   collectable->draw();
 }
 

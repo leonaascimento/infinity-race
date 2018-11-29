@@ -1,5 +1,5 @@
-#ifndef AIRCRAFT_H
-#define AIRCRAFT_H
+#ifndef SKYBOX_H
+#define SKYBOX_H
 
 #include <QtOpenGL>
 
@@ -7,14 +7,14 @@
 #include "light.h"
 #include "model.h"
 
-class Aircraft : protected QOpenGLExtraFunctions {
+class Skybox : protected QOpenGLExtraFunctions {
  public:
-  explicit Aircraft(QOpenGLWidget* glWidget);
+  explicit Skybox(QOpenGLWidget* glWidget);
 
   void shape(Model* model);
   void viewedBy(Camera* camera);
   void litBy(Light* light);
-  void draw(GLfloat fade);
+  void draw();
 
  private:
   QOpenGLWidget* m_glWidget;
@@ -23,4 +23,4 @@ class Aircraft : protected QOpenGLExtraFunctions {
   Light* m_light;
 };
 
-#endif  // AIRCRAFT_H
+#endif  // SKYBOX_H

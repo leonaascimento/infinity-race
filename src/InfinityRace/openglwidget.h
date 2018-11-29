@@ -5,10 +5,12 @@
 #include <QOpenGLWidget>
 #include <QWidget>
 
+#include "aircraft.h"
 #include "camera.h"
 #include "collectable.h"
 #include "light.h"
 #include "model.h"
+#include "skybox.h"
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   Q_OBJECT
@@ -35,7 +37,10 @@ class OpenGLWidget : public QOpenGLWidget, protected QOpenGLExtraFunctions {
   void resizeGL(int width, int height);
   void paintGL();
 
+  std::shared_ptr<Skybox> sky;
+  std::shared_ptr<Aircraft> player;
   std::shared_ptr<Collectable> collectable;
+
   std::shared_ptr<Model> skybox;
   std::shared_ptr<Model> aircraft;
   std::shared_ptr<Model> sandclock;

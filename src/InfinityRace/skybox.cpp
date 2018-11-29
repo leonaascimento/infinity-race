@@ -1,25 +1,23 @@
-#include "collectable.h"
+#include "skybox.h"
 
-Collectable::Collectable(QOpenGLWidget* glWidget) {
+Skybox::Skybox(QOpenGLWidget* glWidget) {
   initializeOpenGLFunctions();
   m_glWidget = glWidget;
 }
 
-void Collectable::shape(Model* model) {
-  Collectable::m_model = model;
+void Skybox::shape(Model* model) {
+  m_model = model;
 }
 
-void Collectable::viewedBy(Camera* camera) {
-  Collectable::m_camera = camera;
+void Skybox::viewedBy(Camera* camera) {
+  m_camera = camera;
 }
 
-void Collectable::litBy(Light* light) {
-  Collectable::m_light = light;
+void Skybox::litBy(Light* light) {
+  m_light = light;
 }
 
-void Collectable::draw() {
-  m_glWidget->makeCurrent();
-
+void Skybox::draw() {
   GLuint shaderProgramID = m_model->shaderProgram[m_model->shaderIndex];
 
   QVector4D ambientProduct = m_light->ambient * m_model->material.ambient;
@@ -49,5 +47,5 @@ void Collectable::draw() {
   glUniform4fv(locSpecularProduct, 1, &(specularProduct[0]));
   glUniform1f(locShininess, m_model->material.shininess);
 
-  m_model->drawModel(false);
+  m_model->drawModel(true);
 }
